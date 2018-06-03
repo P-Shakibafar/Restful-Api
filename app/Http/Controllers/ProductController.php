@@ -3,6 +3,7 @@
 	namespace App\Http\Controllers;
 	
 	use App\Http\Resources\Product\ProductResource;
+	use App\Http\Resources\Product\ProductCollection;
 	use App\Model\Product;
 	use Illuminate\Http\Request;
 	
@@ -11,11 +12,11 @@
 		/**
 		 * Display a listing of the resource.
 		 *
-		 * @return \App\Model\Product[]|\Illuminate\Database\Eloquent\Collection
+		 * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
 		 */
 		public function index()
 		{
-			return Product ::all();
+			return ProductCollection ::collection(Product ::all());
 		}
 		
 		/**
