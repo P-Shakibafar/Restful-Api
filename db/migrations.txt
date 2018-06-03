@@ -1,5 +1,0 @@
-"id"	"migration"	"batch"
-"1"	"2014_10_12_000000_create_users_table"	"1"
-"2"	"2014_10_12_100000_create_password_resets_table"	"1"
-"3"	"2018_06_02_101742_create_products_table"	"1"
-"4"	"2018_06_02_101805_create_reviews_table"	"1"
