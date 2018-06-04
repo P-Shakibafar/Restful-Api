@@ -2,6 +2,8 @@
 	
 	namespace App\Http\Controllers;
 	
+	use App\Http\Resources\ReviewResource;
+	use App\Model\Product;
 	use App\Model\Review;
 	use Illuminate\Http\Request;
 	
@@ -10,11 +12,12 @@
 		/**
 		 * Display a listing of the resource.
 		 *
-		 * @return void
+		 * @param \App\Model\Product $product
+		 * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
 		 */
-		public function index()
+		public function index(Product $product)
 		{
-			//
+			return ReviewResource ::collection($product -> reviews);
 		}
 		
 		/**

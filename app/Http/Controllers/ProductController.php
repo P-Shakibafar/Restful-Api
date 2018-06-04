@@ -16,7 +16,7 @@
 		 */
 		public function index()
 		{
-			return ProductCollection ::collection(Product ::all());
+			return ProductCollection ::collection(Product ::paginate(5));
 		}
 		
 		/**
