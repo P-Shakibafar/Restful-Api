@@ -71,6 +71,7 @@
 			$request['details'] = $request -> description;
 			unset($request['description']);
 			$product -> update($request -> all());
+			
 			return response([
 					'data' => new ProductResource($product),
 			], Response::HTTP_CREATED);
@@ -80,10 +81,13 @@
 		 * Remove the specified resource from storage.
 		 *
 		 * @param  \App\Model\Product $product
-		 * @return void
+		 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+		 * @throws \Exception
 		 */
 		public function destroy(Product $product)
 		{
-			//
+			$product -> delete();
+			
+			return response(NULL, Response::HTTP_NO_CONTENT);
 		}
 	}
