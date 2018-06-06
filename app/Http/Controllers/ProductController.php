@@ -9,6 +9,8 @@
 	use Illuminate\Http\Request;
 	use function response;
 	use Symfony\Component\HttpFoundation\Response;
+	use App\Exceptions\ProductNotBelongsToUser;
+	use Auth;
 	
 	class ProductController extends Controller {
 		
@@ -65,9 +67,11 @@
 		 * @param  \Illuminate\Http\Request $request
 		 * @param  \App\Model\Product       $product
 		 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+		 * @throws \App\Exceptions\ProductNotBelongsToUser
 		 */
 		public function update(Request $request, Product $product)
 		{
+			$this -> ProductUserCheck($product);
 			$request['details'] = $request -> description;
 			unset($request['description']);
 			$product -> update($request -> all());
@@ -86,8 +90,16 @@
 		 */
 		public function destroy(Product $product)
 		{
+			$this->ProductUserCheck($product);
 			$product -> delete();
 			
 			return response(NULL, Response::HTTP_NO_CONTENT);
+		}
+		
+		public function ProductUserCheck($product)
+		{
+			if(Auth ::id() !== $product -> user_id) {
+				throw new ProductNotBelongsToUser;
+			}
 		}
 	}
