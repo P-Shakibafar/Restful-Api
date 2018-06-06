@@ -4,14 +4,12 @@
 	
 	use function dd;
 	use Exception;
-	use Illuminate\Database\Eloquent\ModelNotFoundException;
 	use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-	use function response;
-	use Symfony\Component\HttpFoundation\Response;
-	use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+	use App\Exceptions\ExceptionTrait;
 	
 	class Handler extends ExceptionHandler {
 		
+		use ExceptionTrait;
 		/**
 		 * A list of the exception types that are not reported.
 		 *
@@ -36,6 +34,7 @@
 		 *
 		 * @param  \Exception $exception
 		 * @return void
+		 * @throws \Exception
 		 */
 		public function report(Exception $exception)
 		{
@@ -52,16 +51,8 @@
 		public function render($request, Exception $exception)
 		{
 			if($request -> expectsJson()) {
-				if($exception instanceof ModelNotFoundException) {
-					return response() -> json([
-							'errors' => 'Model not found',
-					], Response::HTTP_NOT_FOUND);
-				}
-				if($exception instanceof NotFoundHttpException) {
-					return response() -> json([
-							'errors' => 'Incorect route',
-					], Response::HTTP_NOT_FOUND);
-				}
+//				dd($exception);
+				return $this -> apiException($request, $exception);
 			}
 			
 			return parent ::render($request, $exception);
