@@ -93,7 +93,9 @@
 			$this->ProductUserCheck($product);
 			$product -> delete();
 			
-			return response(NULL, Response::HTTP_NO_CONTENT);
+			return response([
+					'data'=>'Product Deleted'
+			], Response::HTTP_OK);
 		}
 		
 		public function ProductUserCheck($product)
